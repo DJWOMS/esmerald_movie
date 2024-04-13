@@ -1,0 +1,46 @@
+version: "3.9"
+x-pg_settings: &pg_settings
+  POSTGRES_HOST: pg
+  POSTGRES_PORT: 5432
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: movie
+  POSTGRES_POOL: 10
+
+#x-env: &env
+#  env_file:
+#    - .env
+
+services:
+  api:
+    build: .
+    container_name: movie-api
+    restart: always
+    environment:
+      <<: *pg_settings
+      ESMERALD_SETTINGS_MODULE: 'src.configs.development.settings.DevelopmentAppSettings'
+      EDGY_DATABASE_URL: postgresql+asyncpg://postgres:postgres@pg:5432/movie
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    depends_on:
+      pg:
+        condition: service_healthy
+
+  pg:
+    environment:
+      <<: *pg_settings
+    image: postgres:15.3-alpine
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: pg_isready -d "$${POSTGRES_DB}" -U "$${POSTGRES_USER}"
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
