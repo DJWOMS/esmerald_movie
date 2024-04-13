@@ -1,3 +1,11 @@
+.idea
+idea
+.DS_Store
+.git
+*.egg-info/
+.installed.cfg
+*.egg
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
