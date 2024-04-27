@@ -6,13 +6,13 @@ from src.models import Category
 class CategoryRepository:
     model = Category
 
-    async def create(self, dto: CreateCategoryDTO):
+    async def create(self, dto: CreateCategoryDTO) -> Category:
         return await self.model.query.create(**dto.model_dump())
 
-    async def get(self, pk: int) -> CategoryDTO | None:
+    async def get(self, pk: int) -> Category | None:
         return await self.model.query.get_or_none(id=pk)
 
-    async def get_by_name(self, name: str) -> CategoryDTO:
+    async def get_by_name(self, name: str) -> Category:
         return await self.model.query.get(name=name)
 
     async def get_all(self):

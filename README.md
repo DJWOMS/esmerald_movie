@@ -24,3 +24,5 @@ docker exec -it movie-api edgy migrate
 ```
 http:\\127.0.0.1:8000\docs\swagger
 ```
+
+docker exec -it movie-api esmerald run --directive createsuperuser --first-name John --last-name Bob --email j@mail.com --username Boby --password Test1234

@@ -5,6 +5,7 @@ from .genres import Genre
 from .movies import Movie
 from .rating import Rating, RatingStar
 from .review import Review
+from .user import User
 
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     "Rating",
     "RatingStar",
     "Review",
+    "User",
 ]

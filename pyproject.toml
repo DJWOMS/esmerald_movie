@@ -11,6 +11,7 @@ esmerald = "^3.1.2"
 edgy = "^0.9.2"
 uvicorn = "^0.29.0"
 asyncpg = "^0.29.0"
+esmerald-simple-jwt = "^0.2.0"
 
 
 [build-system]

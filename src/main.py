@@ -29,7 +29,10 @@ def get_application():
     database, registry = conf.settings.registry
 
     app = Esmerald(
-        routes=[Include(path="/api/v1", namespace="src.urls")],
+        routes=[
+            Include(path="/api/v1", namespace="src.urls"),
+            Include(path="/auth", namespace="esmerald_simple_jwt.urls"),
+        ],
         on_startup=[database.connect],
         on_shutdown=[database.disconnect],
     )

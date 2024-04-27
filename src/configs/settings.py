@@ -1,10 +1,12 @@
 from functools import cached_property
 from typing import Optional
+from pydantic import Field
 
 from edgy import Database, Registry
 from esmerald.conf.enums import EnvironmentType
 from esmerald.conf.global_settings import EsmeraldAPISettings
-from pydantic import Field
+
+from esmerald_simple_jwt.config import SimpleJWT
 
 
 class AppSettings(EsmeraldAPISettings):
@@ -27,4 +29,14 @@ class AppSettings(EsmeraldAPISettings):
     @property
     def url(self) -> str:
         return f"{self.url_schema}://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
+
+    @property
+    def simple_jwt(self) -> SimpleJWT:
+        from src.apps.account.backends import BackendAuthentication, RefreshAuthentication
+
+        return SimpleJWT(
+            signing_key=self.secret_key,
+            backend_authentication=BackendAuthentication,
+            backend_refresh=RefreshAuthentication,
+        )
 
