@@ -30,24 +30,18 @@ class BackendAuthentication(SimpleBackend):
         try:
             user: User = await User.query.get(email=self.email)
         except ObjectNotFound:
-            # Run the default password hasher once to reduce the timing
-            # difference between an existing and a nonexistent user.
             await User().set_password(self.password)
         else:
             is_password_valid = await user.check_password(self.password)
             if is_password_valid and self.user_can_authenticate(user):
-                # The lifetime of a token should be short, let us make 5 minutes.
-                # You can use also the access_token_lifetime from the JWT config directly
                 access_time = datetime.now() + settings.simple_jwt.access_token_lifetime
                 refresh_time = datetime.now() + settings.simple_jwt.refresh_token_lifetime
                 access_token = TokenAccess(
-                    # The `token_type` defaults to `access_token`
                     access_token=self.generate_user_token(
                         user,
                         time=access_time,
                         token_type=settings.simple_jwt.access_token_name,
                     ),
-                    # The `token_type` defaults to `refresh_token`
                     refresh_token=self.generate_user_token(
                         user,
                         time=refresh_time,
