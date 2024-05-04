@@ -40,3 +40,11 @@ class AppSettings(EsmeraldAPISettings):
             backend_refresh=RefreshAuthentication,
         )
 
+    # @property
+    # def middleware(self) -> list["Middleware"]:
+    #     from src.middleware.jwt import JWTAuthMiddleware
+    #
+    #     return [
+    #         JWTAuthMiddleware
+    #     ]
+

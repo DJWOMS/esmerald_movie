@@ -20,7 +20,7 @@ class IsUserAdmin(BaseAbstractUserPermission):
         """
         Logic to check if user is staff
         """
-        return bool(request.user and request.user.is_staff)
+        return bool(request.user and request.user.is_superuser)
 
     async def has_permission(self, request: "Request", apiview: "APIGateHandler"):
         super().has_permission(request, apiview)

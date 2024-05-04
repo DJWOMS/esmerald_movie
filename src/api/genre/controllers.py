@@ -1,7 +1,10 @@
+# from __future__ import annotations
+
 from typing import TYPE_CHECKING, TypeVar
 
 from esmerald import APIView, delete, get, post, put, status, Inject
 
+from src.apps.account.permissions import IsUserAdmin
 from src.models import Genre
 
 from src.apps.genre.repository import GenreRepository
@@ -18,6 +21,7 @@ T = TypeVar("T")
 
 class GenreAPIView(APIView):
     # path: str = "/genre"
+    permissions = [IsUserAdmin]
     tags: list["str"] = ["Genre"]
     dependencies: "Dependencies" = {
         "repository": Inject(GenreRepository),
@@ -40,6 +44,6 @@ class GenreAPIView(APIView):
     async def update(self, pk: int, data: UpdateGenreDTO, service: GenreService) -> Genre:
         return await service.update(pk, data)
 
-    @delete("/{pk:int}")
+    @delete("/{pk:int}", status_code=status.HTTP_200_OK)
     async def delete(self, pk: int, service: GenreService) -> None:
         return await service.delete(pk)

@@ -40,6 +40,6 @@ class CategoryAPIView(APIView):
     async def update(self, pk: int, data: UpdateCategoryDTO, service: CategoryService) -> Category:
         return await service.update(pk, data)
 
-    @delete("/{pk:int}")
+    @delete("/{pk:int}", status_code=status.HTTP_200_OK)
     async def delete(self, pk: int, service: CategoryService) -> None:
         return await service.delete(pk)

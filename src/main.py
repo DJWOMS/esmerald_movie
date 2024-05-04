@@ -37,7 +37,11 @@ def get_application():
         on_shutdown=[database.disconnect],
     )
 
-    Migrate(app, registry)
+    Migrate(
+        app,
+        registry,
+        # model_apps={"src": "src.models"},
+    )
     return app
 
 
