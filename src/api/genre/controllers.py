@@ -3,6 +3,7 @@
 from typing import TYPE_CHECKING, TypeVar
 
 from esmerald import APIView, delete, get, post, put, status, Inject
+from esmerald.openapi.security.http import Bearer
 
 from src.apps.account.permissions import IsUserAdmin
 from src.models import Genre
@@ -21,6 +22,7 @@ T = TypeVar("T")
 
 class GenreAPIView(APIView):
     # path: str = "/genre"
+    security = [Bearer]
     permissions = [IsUserAdmin]
     tags: list["str"] = ["Genre"]
     dependencies: "Dependencies" = {

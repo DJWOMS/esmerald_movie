@@ -3,6 +3,7 @@
 from typing import TYPE_CHECKING, TypeVar, Any
 
 from esmerald import APIView, delete, get, post, put, status, Inject, Factory
+from esmerald.openapi.security.http import Bearer
 
 from src.apps.account.permissions import IsUserAdmin
 
@@ -17,6 +18,7 @@ if TYPE_CHECKING:
 
 class CategoryAPIView(APIView):
     # path: str = "/category"
+    security = [Bearer]
     permissions = [IsUserAdmin]
     tags = ["Category"]
     dependencies = {

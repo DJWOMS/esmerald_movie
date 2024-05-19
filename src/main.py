@@ -35,6 +35,7 @@ def get_application():
         ],
         on_startup=[database.connect],
         on_shutdown=[database.disconnect],
+        # debug=True,
     )
 
     Migrate(
